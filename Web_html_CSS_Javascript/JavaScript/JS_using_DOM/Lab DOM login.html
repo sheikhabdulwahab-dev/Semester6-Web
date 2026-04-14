@@ -1,0 +1,92 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>ALLL</title>
+</head>
+<body>
+
+    <div style="display: flex;   flex-direction: column; align-items: center; gap: 5px;">
+
+         <input type = "text"  id = 'val1'  >  
+          
+         <button onclick="addlist()" > Add Task </button>
+  
+    <p id = 'val'></p> 
+  
+    </div>
+     clear
+
+    <script>
+         
+        //let task ;
+        let arr = []  ;
+        function addlist(){
+            let task  ;
+          task = document.getElementById('val1').value;
+           arr.push(task);
+
+           document.getElementById('val').innerHTML = '' ;
+           // let val
+           for(let i of arr)
+            document.getElementById('val').innerHTML  +=   i + ' '  + "<button type=button> remove </button>" + "<br>" ;
+
+
+         
+            
+  
+        }
+    </script>
+    
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>Login Page</title>
+</head>
+<body style=" background-image: url(https://img.freepik.com/premium-vector/global-network-connections-abstract-vector-neural-networks-cyberspace-futuristic-grid-artificial-intelligence-technology-virtual-cyber-dynamic_813854-283.jpg?semt=ais_hybrid&w=740&q=80) ;  display: flex;  align-items: center; justify-content: center; ">
+   
+    <div style="display: flex; background-image : url(https://img.freepik.com/free-photo/particle-lines-futuristic-gradient-background_53876-104053.jpg?semt=ais_hybrid&w=740&q=80) ;  width: 300px; height: 300px; align-items: center; justify-content: center;   "> 
+        <form style="display: flex; flex-direction: column;  align-items: center; justify-content: center; gap: 5px;  ">
+            <label for="login" > Login</label>
+            <input type = "text" id="login" name="Email" placeholder="Enter Email"   >  
+
+             <label for="loginpas" > Password</label>
+            <input type = "text" id="loginpas" name="Email_Password" placeholder="Enter Password" >
+            <button  type="button"  onclick="check()"> Submit</button>
+
+            <p id = "show"> </p>
+          </form>
+
+           
+        
+   
+    </div>
+     
+
+    <script>
+
+        let email = "ali@gmail.com";
+        let pin = 123 ;
+        function check(){
+            let inputemail = document.getElementById("login").value ;
+            let inputpin = document.getElementById("loginpas").value ;
+
+            if(email == inputemail && pin == inputpin)
+        {
+            document.getElementById("show").innerHTML = "Login Sucessful"
+
+        }
+        else{
+            document.getElementById("show").innerHTML = "Again Try"
+
+        }
+
+
+        }
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,220 @@
+ 
+<html>
+  <head>
+   <tittle> Your First Html Page </title>
+  
+  </head>
+
+  <body>
+  <!---TAsk1--->
+
+  <h1>Hello,World </h1>
+  <p> This is my first HTML page. </p> 	 
+  
+  <!---Task2-->
+
+  <h2> HTML Basics </h2>
+  <p>   This is a brief introduction to HTML basics.<p>
+  
+  <h3> HTML Headings </h3>
+  <p>  HTML provides six levels of headings, from <h1> (the largest) to <h6> (the smallest). </p>
+  <h3> Unordered List  </h3>
+  <ul>
+   <li> Item1 1 </li>
+   <li> Item1 2 </li>
+   <li> Item1 3 </li>
+   
+  </ul>
+
+  <h3> Order List </h3>
+  <ol>
+  <li> First item </li>
+  <li> Second item </li>
+  <li> Third item </li>
+  </ol>
+  
+  <!---Task3 --->
+ 
+  <h2> Links and Images  </h2>
+ <h3> Hyperlinks  </h3>
+<p>   Visit the official website of HTML: <a href="https://developer.mozilla.org/en
+US/docs/Web/HTML" > MDN Web Docs - HTML</a>.</p> 
+
+<h3> image </h3>
+<img src = " G:\UOL Abdul Wahab\Semester6\Web\Lab\NNN03440.JPG" width = "300" height = "300" >
+  
+ <!--TAsk4---->
+
+   
+<h2>  Forms </h2>
+
+<form>
+<label for = "username" > Username: </label>
+<input type= "text" id="username" name ="username" required >
+
+<label for = "password" > Password </label>
+<input type = "password" id= "password" name = "password" required > 
+
+<input type = "submit" value="Login">
+
+</form>
+
+<img src = "https://photodpshare.com/wp-content/uploads/2025/09/whatsapp-with-attitude-look.webp" alt = "hi" width = "100" height = "120" >
+
+<!-- List-->
+
+<h1> Welcome to Khan Resturant </h1>
+
+<ul style = "list-style-type:square;">
+
+<li> Starters </li>
+<ul style="list-style-type:square;">
+<li> Soup </li>
+<li> Salad </li>
+<li> Spring Rools </li>
+</ul>
+
+<li> Main Course </li>
+<ul style ="list-style-type:square;">
+<li> Pasta </li>
+<li> Steak</li>
+<li> Grilled Chicken</li>
+</ul>
+
+<li> Desserts </li>
+<ul style ="list-style-type:square;">
+<li> Ice Cream</li>
+<li> Cake </li>
+<li>  Pudding </li>
+</ul>
+
+<li> Beverages </li>
+<ul style ="list-style-type:square;">
+<li> Tea</li>
+<li> Coffee </li>
+<li>  Juice </li>
+</ul>
+
+</ul>
+ 
+<h1> Today's Specials </h1>
+<ol type = "I">
+<li> "Grilled Chicken with Herbs" </li>
+<li> "Chocolate Lava Cake" </li>
+<li> "Mango Smoothie" </li>
+</ol>
+
+<!-- Table--->
+
+<h1> Table Reservation Slots </h1>
+<table border = "1">
+<tr>
+<th> Time Slot </th>
+<th> 2-Seater </th>
+<th> 4-Seater </th>
+<th> 6-Seater </th>
+</tr>
+
+<tr>
+ <td>12:00 PM - 1:00 PM</td> 
+        <td>Available</td> 
+        <td>Reserved</td> 
+ <td>Available</td> 
+</tr>
+
+<tr>
+<td>1:00 PM - 2:00 PM</td> 
+        <td>Reserved</td> 
+        <td>Available</td> 
+        <td>Reserved</td> 
+
+</tr>
+
+<tr>
+  <td>2:00 PM - 3:00 PM</td> 
+        <td>Available</td> 
+        <td>Available</td> 
+        <td>Reserved</td> 
+</tr>
+
+<tr> 
+    <td>3:00 PM - 4:00 PM</td> 
+    <td>Reserved</td> 
+    <td>Available</td> 
+    <td>Available</td> 
+</tr> 
+
+<tr> 
+    <td>4:00 PM - 5:00 PM</td> 
+    <td>Available</td> 
+    <td>Reserved</td> 
+    <td>Reserved</td> 
+</tr> 
+
+
+</table>
+
+
+<!---Restaurant Feedback --->
+
+<h1> We Value Your Feedback! </h1>
+
+<form>
+
+<label for ="name" > Name: </label>
+<input type = "text" id = "name" name = "name" placeholder = "Enter your name"> <br>
+<br>
+<label for = "email" > Email: </label>
+<input type = "text" id = "email"  name = "email" placeholder ="Enter your email">
+<br> <br>
+<label> Food Quailty: </label> <br>
+
+<input type="radio" id="fquality" name = "food_quality" value = "1">
+<label for = "fquality" > 1 </label>
+<input type="radio" id="fquality" name = "food_quality" value = "2">
+<label for = "fquality" > 2 </label>
+<input type="radio" id="fquality" name = "food_quality" value = "3">
+<label for = "fquality" > 3 </label>
+<input type="radio" id="fquality" name = "food_quality" value = "4">
+<label for = "fquality" > 4 </label>
+<input type="radio" id="fquality" name = "food_quality" value = "5">
+<label for = "fquality" > 5 </label>
+<br><br>
+
+
+<label for ="rating" > Service Rating: </label>
+<select id ="rating" name = "service rating">
+<option value ="excellent"> Excellent </option>
+<option value ="good"> Good </option>
+<option value ="formal"> Formal </option>
+<option value ="bad"> Bad </option>
+</select>
+<br> <br>
+
+<label > What did you like about the ambiance? (Check all that apply): </label>
+<br>
+<input type = "checkbox" id="ambiance1" name ="ambiance1" value ="Music">
+<label for = "ambiance1" > Music </label>
+<input type = "checkbox" id="ambiance2" name ="ambiance2" value ="Lighting">
+<label for = "ambiance2" > Lighting </label>
+<input type = "checkbox" id="ambiance3" name ="ambiance3" value ="Comfort">
+<label for = "ambiance3" > Comfort </label>
+<br> <br>
+
+
+<label for = "comment"> Additional Comments: </label> <br>
+<textarea id = "comment" name ="comment" rows = "5" cols = "50" >
+ Write your comments here...
+</textarea>
+
+<br> <br>
+<input type = "button" value ="submit Feedback" >
+
+
+</form>
+
+
+
+
+</body>
+</html>

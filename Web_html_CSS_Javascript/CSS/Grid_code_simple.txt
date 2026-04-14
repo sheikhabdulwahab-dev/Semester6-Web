@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     
+    <title>Assignment1</title>
+   <!---- <link rel="stylesheet" href="Assign_style.css">-->
+
+    <style>
+           .box
+        {
+            display: flex;
+             
+             
+            background-color: yellow;
+            border: 1px solid black;
+
+            justify-content: center;
+            align-items: center;
+             
+ 
+
+        }
+    </style>
+
+</head>
+
+<body >
+
+    <div style="    display: grid;   background-color: aqua;  ">
+
+         <div class="box" style="height: 10vh;"  >
+            header
+         </div>
+
+         <div class="box" style="height: 70vh;" >
+            main
+         </div>
+
+         <div class="box"  style="height: 20vh;" >
+            footer
+         </div>
+
+         <div class="box" style="height: 20vh;">
+            About
+         </div>
+        
+    </div>
+
+     
+ 
+
+
+    
+</body>
+</html>
