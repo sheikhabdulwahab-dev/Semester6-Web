@@ -1,5 +1,4 @@
 
-
 // import Navbar from './component/nav';
 
 // import Mainbody from './component/mainbody';
@@ -45,7 +44,7 @@ function App() {
 
     </themecontext.Provider>
     
-    
+
 
     // <h1>halo</h1>
 
