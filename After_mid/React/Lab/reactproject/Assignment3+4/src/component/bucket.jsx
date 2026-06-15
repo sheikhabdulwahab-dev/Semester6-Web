@@ -1,0 +1,230 @@
+// import {useContext} from 'react'
+// import { cartcontext } from './cartcontext'
+
+// function bucket(){
+
+//     // 1. We grab 'setcart' as well so we can add the Clear Cart button here too!
+//     const {cart, setcart, user} = useContext(cartcontext)
+
+//     const totalprice = cart.reduce((total , item) =>{
+//        return total+ (item.price * item.quantity)
+//     } , 0)
+
+//     // --- NEW FEATURE: Protect the Bucket ---
+//     if (user === '') {
+//         return (
+//             <div style={{ padding: '40px' }}>
+//                 <h2 style={{ color: 'red' }}>Access Denied 🛑</h2>
+//                 <h3>Please go back to the Home page and Login first to see your bucket!</h3>
+//             </div>
+//         );
+//     } // <-- Fixed the missing brace here!
+    
+//     // --- PREMIUM BUCKET LAYOUT ---
+//     return(
+//         <div style={{ padding: '40px', fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif', backgroundColor: '#F8F9FA', minHeight: '100vh', display: 'flex', justifyContent: 'center' }}>
+            
+//             <div style={{ backgroundColor: 'white', padding: '40px', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.08)', width: '600px', height: 'fit-content' }}>
+                
+//                 <h2 style={{ color: '#E23744', borderBottom: '3px solid #eee', paddingBottom: '15px', marginTop: '0' }}>🛒 Hi.. {user}!</h2>
+                
+//                 {cart.length === 0 ? (
+//                     <div style={{ textAlign: 'center', padding: '40px 0' }}>
+//                         <h3 style={{ color: '#888' }}>Your bucket is totally empty!</h3>
+//                         <p style={{ color: '#aaa' }}>Go back to the menu and add some delicious pizza.</p>
+//                     </div>
+//                 ) : (
+//                     <div>
+//                         {/* Table Header */}
+//                         <div style={{ display: 'flex', padding: '15px 10px', backgroundColor: '#FFF5F6', borderRadius: '10px', fontWeight: 'bold', color: '#E23744', marginBottom: '15px' }}>
+//                             <div style={{ flex: '1', textAlign: 'center' }}>Quantity</div>
+//                             <div style={{ flex: '2', paddingLeft: '10px' }}>Item Name</div>
+//                             <div style={{ flex: '1', textAlign: 'right' }}>Price</div>
+//                         </div>
+                        
+//                         {/* Cart Items */}
+//                         {cart.map((item, index) => (
+//                             <div key={index} style={{ display: 'flex', padding: '15px 10px', borderBottom: '1px solid #eee', alignItems: 'center' }}>
+                                
+//                                 {/* Quantity Column */}
+//                                 <div style={{ flex: '1', textAlign: 'center' }}>
+//                                     <span style={{ fontWeight: 'bold', color: '#555', backgroundColor: '#f5f5f5', padding: '5px 12px', borderRadius: '5px' }}>
+//                                         {item.quantity}
+//                                     </span>
+//                                 </div>
+                                
+//                                 {/* Name Column */}
+//                                 <div style={{ flex: '2', paddingLeft: '10px' }}>
+//                                     <span style={{ fontWeight: 'bold', color: '#333', fontSize: '18px' }}>{item.name}</span>
+//                                 </div>
+                                
+//                                 {/* Price Column */}
+//                                 <div style={{ flex: '1', textAlign: 'right' }}>
+//                                     <span style={{ fontWeight: 'bold', color: '#666' }}>Rs. {item.price * item.quantity}</span>
+//                                 </div>
+                                
+//                             </div>
+//                         ))}
+//                     </div>
+//                 )}
+                
+//                 <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+//                     <button 
+//                         onClick={() => setcart([])} 
+//                         style={{ backgroundColor: 'white', color: '#E23744', border: '2px solid #E23744', padding: '12px 25px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '15px' }}
+//                     >
+//                         Clear Cart 🗑️
+//                     </button>
+
+//                     <div style={{ textAlign: 'right' }}>
+//                         <span style={{ fontSize: '16px', color: '#666' }}>Grand Total</span>
+//                         <h2 style={{ margin: '5px 0 0 0', color: '#E23744', fontSize: '32px' }}>Rs. {totalprice}</h2>
+//                     </div>
+//                 </div>
+
+//             </div>
+//         </div>
+//     )
+// }
+// export default bucket
+
+/////
+
+
+import { useContext } from 'react';
+import { cartcontext } from './cartcontext';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from './firebase';
+
+function bucket(){
+    const { cart, setcart, user } = useContext(cartcontext);
+
+    const totalprice = cart.reduce((total, item) => {
+       return total + (item.price * item.quantity);
+    }, 0);
+
+    // --- Protect the Bucket ---
+    if (!user) {
+        return (
+            <div style={{ padding: '40px', fontFamily: '"Segoe UI", sans-serif', textAlign: 'center' }}>
+                <h2 style={{ color: '#E23744' }}>Access Denied 🛑</h2>
+                <h3>Please log in first using the navigation bar to view your bucket!</h3>
+            </div>
+        );
+    }
+    
+    // --- Place Order handler ---
+    const handlePlaceOrder = async () => {
+        if (cart.length === 0) {
+            alert("Your bucket is empty!");
+            return;
+        }
+
+        try {
+            // Store the order in Firestore 'orders' collection
+            await addDoc(collection(db, "orders"), {
+                userId: user.uid,
+                userName: user.name,
+                items: cart,
+                total: totalprice,
+                createdAt: new Date()
+            });
+
+            alert("Order placed successfully! 🎉");
+            setcart([]); // Clear the cart after placing order
+        } catch (error) {
+            console.error("Error saving order: ", error);
+            alert("Failed to place order. Please try again.");
+        }
+    };
+    
+    // --- PREMIUM BUCKET LAYOUT ---
+    return(
+        <div style={{ padding: '40px', fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif', backgroundColor: '#F8F9FA', minHeight: '100vh', display: 'flex', justifyContent: 'center' }}>
+            
+            <div style={{ backgroundColor: 'white', padding: '40px', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.08)', width: '600px', height: 'fit-content' }}>
+                
+                <h2 style={{ color: '#E23744', borderBottom: '3px solid #eee', paddingBottom: '15px', marginTop: '0' }}>🛒 Hi.. {user.name}!</h2>
+                
+                {cart.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '40px 0' }}>
+                        <h3 style={{ color: '#888' }}>Your bucket is totally empty!</h3>
+                        <p style={{ color: '#aaa' }}>Go back to the menu and add some delicious pizza.</p>
+                    </div>
+                ) : (
+                    <div>
+                        {/* Table Header */}
+                        <div style={{ display: 'flex', padding: '15px 10px', backgroundColor: '#FFF5F6', borderRadius: '10px', fontWeight: 'bold', color: '#E23744', marginBottom: '15px' }}>
+                            <div style={{ flex: '1', textAlign: 'center' }}>Quantity</div>
+                            <div style={{ flex: '2', paddingLeft: '10px' }}>Item Name</div>
+                            <div style={{ flex: '1', textAlign: 'right' }}>Price</div>
+                        </div>
+                        
+                        {/* Cart Items */}
+                        {cart.map((item, index) => (
+                            <div key={index} style={{ display: 'flex', padding: '15px 10px', borderBottom: '1px solid #eee', alignItems: 'center' }}>
+                                
+                                {/* Quantity Column */}
+                                <div style={{ flex: '1', textAlign: 'center' }}>
+                                    <span style={{ fontWeight: 'bold', color: '#555', backgroundColor: '#f5f5f5', padding: '5px 12px', borderRadius: '5px' }}>
+                                        {item.quantity}
+                                    </span>
+                                </div>
+                                
+                                {/* Name Column */}
+                                <div style={{ flex: '2', paddingLeft: '10px' }}>
+                                    <span style={{ fontWeight: 'bold', color: '#333', fontSize: '18px' }}>{item.name}</span>
+                                </div>
+                                
+                                {/* Price Column */}
+                                <div style={{ flex: '1', textAlign: 'right' }}>
+                                    <span style={{ fontWeight: 'bold', color: '#666' }}>Rs. {item.price * item.quantity}</span>
+                                </div>
+                                
+                            </div>
+                        ))}
+                    </div>
+                )}
+                
+                <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <button 
+                        onClick={() => setcart([])} 
+                        style={{ backgroundColor: 'white', color: '#E23744', border: '2px solid #E23744', padding: '12px 25px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '15px' }}
+                    >
+                        Clear Cart 🗑️
+                    </button>
+
+                    <div style={{ textAlign: 'right' }}>
+                        <span style={{ fontSize: '16px', color: '#666' }}>Grand Total</span>
+                        <h2 style={{ margin: '5px 0 0 0', color: '#E23744', fontSize: '32px' }}>Rs. {totalprice}</h2>
+                    </div>
+                </div>
+
+                {/* --- ORDER BUTTON --- */}
+                {cart.length > 0 && (
+                    <button 
+                        onClick={handlePlaceOrder}
+                        style={{ 
+                            backgroundColor: '#b85d34', // Styled brown/orange button
+                            color: 'white', 
+                            border: 'none', 
+                            padding: '15px', 
+                            borderRadius: '8px', 
+                            cursor: 'pointer', 
+                            fontWeight: 'bold', 
+                            width: '100%', 
+                            fontSize: '18px', 
+                            marginTop: '25px',
+                            boxShadow: '0 4px 10px rgba(184, 93, 52, 0.3)' 
+                        }}
+                    >
+                        Order Now 🍕
+                    </button>
+                )}
+
+            </div>
+        </div>
+    );
+}
+
+export default bucket;
