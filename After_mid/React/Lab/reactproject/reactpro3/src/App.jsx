@@ -20,6 +20,9 @@ function App() {
       const docid = await addDoc(collection(db, "semester6user"), { name: credential.user.displayName, email: credential.user.email })
       alert(docid.id)
 
+      
+
+
       // await setDoc(doc(db , "sem6user1" , docid.id ) , {username: credential.user.displayName , contact: "1234"})
 
 
