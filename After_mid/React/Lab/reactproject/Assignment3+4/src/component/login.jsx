@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   signInWithEmailAndPassword, 
@@ -94,7 +94,7 @@ function Login() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '50px', backgroundColor: '#F8F9FA', minHeight: '80vh', fontFamily: '"Segoe UI", sans-serif' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '50px', backgroundColor: '#F8F9FA', minHeight: '70vh', fontFamily: '"Poppins", "Segoe UI", sans-serif' }}>
       <div style={{ backgroundColor: 'white', padding: '40px', borderRadius: '15px', boxShadow: '0 10px 30px rgba(0,0,0,0.08)', width: '400px' }}>
         <h2 style={{ color: '#E23744', textAlign: 'center', marginBottom: '20px' }}>
           {isSignUp ? 'Create Account' : 'Login'}
@@ -143,7 +143,7 @@ function Login() {
           onClick={handleGoogleSignIn} 
           style={{ backgroundColor: 'white', color: '#444', border: '1px solid #ddd', padding: '12px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '15px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
         >
-          <img src="https://lh3.googleusercontent.com/COxitqgJr1sICZ9m4_gdNpGM7b8GctQB1SgthgthTVJqvDCO3CkhXk9554b9KQxzKm5m" alt="Google" style={{ width: '18px' }} />
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style={{ width: '18px', height: '18px' }} />
           Sign in with Google
         </button>
 

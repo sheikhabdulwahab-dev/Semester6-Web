@@ -1,15 +1,94 @@
 import { cartcontext } from "./component/cartcontext"
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { auth } from './component/firebase'
- 
+import './App.css'
+
 import Pizzamenu from './component/pizzamenu'
 import Bucket from "./component/bucket"
 import Contact from "./component/contact"
-import Login from "./component/login" // Import the Login component!
-import OrderHistory from "./component/orderhistory" // Import the OrderHistory component!
-  
+import Login from "./component/login"
+import OrderHistory from "./component/orderhistory"
+
+// Separate NavBar component so it can use useLocation()
+function NavBar({ user, handleSignOut, cart }) {
+  const location = useLocation();
+  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+
+  return (
+    <nav className="navbar">
+      {/* Left Side Links */}
+      <div className="nav-links">
+        <Link to='/pizzamenu' className={`nav-link ${location.pathname === '/' || location.pathname === '/pizzamenu' ? 'active' : ''}`}>
+          🍕 Menu
+        </Link>
+        <Link to='/bucket' className={`nav-link ${location.pathname === '/bucket' ? 'active' : ''}`} style={{ position: 'relative' }}>
+          🛒 Bucket
+          {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+        </Link>
+        <Link to='/contact' className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}>
+          📞 Contact
+        </Link>
+        {user && (
+          <Link to='/orderhistory' className={`nav-link ${location.pathname === '/orderhistory' ? 'active' : ''}`}>
+            📜 History
+          </Link>
+        )}
+      </div>
+
+      {/* Right Side: Auth status */}
+      <div className="nav-auth">
+        {user ? (
+          <div className="nav-user-info">
+            <span className="nav-user-name">
+              👋 Hi, {user.name}!
+            </span>
+            <button onClick={handleSignOut} className="nav-btn">
+              Sign Out
+            </button>
+          </div>
+        ) : (
+          <Link to='/login' className="nav-btn">
+            Login
+          </Link>
+        )}
+      </div>
+    </nav>
+  );
+}
+
+// Footer component
+function Footer() {
+  return (
+    <footer className="footer">
+      <div className="footer-content">
+        <div className="footer-brand">
+          <h3>🍕 Pizza Shop</h3>
+          <p>Serving premium handcrafted pizzas with the freshest ingredients since 2024.</p>
+        </div>
+        <div className="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><Link to="/pizzamenu">Menu</Link></li>
+            <li><Link to="/bucket">My Bucket</Link></li>
+            <li><Link to="/contact">Contact Us</Link></li>
+          </ul>
+        </div>
+        <div className="footer-contact">
+          <h4>Contact Info</h4>
+          <p>📧 pizzaShop@gmail.com</p>
+          <p>📞 +92 300 1234567</p>
+          <p>📍 Lahore, Pakistan</p>
+        </div>
+      </div>
+      <div className="footer-bottom">
+        © {new Date().getFullYear()} Pizza Shop. All Rights Reserved.
+      </div>
+    </footer>
+  );
+}
+
 function App(){
   const [cart, setcart] = useState([])
   const [user, setUser] = useState(null) // Initialize user as null (object) instead of ''
@@ -29,76 +108,20 @@ function App(){
       <BrowserRouter>  
 
       {/* Navigation Bar */}
-      <nav style={{ 
-        backgroundColor: '#E23744', 
-        padding: '20px 40px', 
-        display: 'flex', 
-        justifyContent: 'space-between', // Push links to left, user status to right
-        alignItems: 'center',
-        boxShadow: '0 4px 15px rgba(226, 55, 68, 0.4)',
-        fontFamily: '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif'
-      }}>
-        {/* Left Side Links */}
-        <div style={{ display: 'flex', gap: '50px' }}>
-          <Link to='/Pizzamenu' style={{ color: 'white', textDecoration: 'none', fontSize: '18px', fontWeight: 'bold', letterSpacing: '1px' }}>🍕 Menu</Link>
-          <Link to='/Bucket' style={{ color: 'white', textDecoration: 'none', fontSize: '18px', fontWeight: 'bold', letterSpacing: '1px' }}>🛒 Bucket</Link>
-          <Link to='/Contact' style={{ color: 'white', textDecoration: 'none', fontSize: '18px', fontWeight: 'bold', letterSpacing: '1px' }}>📞 Contact</Link>
-          {user && (
-            <Link to='/orderhistory' style={{ color: 'white', textDecoration: 'none', fontSize: '18px', fontWeight: 'bold', letterSpacing: '1px' }}>📜 History</Link>
-          )}
-        </div>
-
-        {/* Right Side: Auth status */}
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          {user ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-              <span style={{ color: 'white', fontSize: '18px', fontWeight: 'bold' }}>
-                Hi! {user.name}
-              </span>
-              <button 
-                onClick={handleSignOut} 
-                style={{ 
-                  backgroundColor: 'white', 
-                  color: '#E23744', 
-                  border: 'none', 
-                  padding: '8px 18px', 
-                  borderRadius: '8px', 
-                  cursor: 'pointer', 
-                  fontWeight: 'bold',
-                  fontSize: '15px' 
-                }}
-              >
-                Signout
-              </button>
-            </div>
-          ) : (
-            <Link 
-              to='/login' 
-              style={{ 
-                backgroundColor: 'white', 
-                color: '#E23744', 
-                textDecoration: 'none', 
-                fontSize: '16px', 
-                fontWeight: 'bold', 
-                padding: '8px 18px', 
-                borderRadius: '8px' 
-              }}
-            >
-              Login
-            </Link>
-          )}
-        </div>
-      </nav>
+      <NavBar user={user} handleSignOut={handleSignOut} cart={cart} />
 
       {/* Routes */}
       <Routes>
         <Route path = '/' element = {<Pizzamenu/>} />
         <Route path = '/pizzamenu' element = {<Pizzamenu/>} />
         <Route path = '/bucket' element = {<Bucket/>} />
-        <Route path = '/Contact' element = {<Contact/>} />
-        <Route path = '/login' element = {<Login />} /> {/* Add the Login route */}
-        <Route path = '/orderhistory' element = {<OrderHistory />} /> {/* Add the Order History route */}
+        <Route path = '/contact' element = {<Contact/>} />
+        <Route path = '/login' element = {<Login />} />
+        <Route path = '/orderhistory' element = {<OrderHistory />} />
       </Routes>
+
+      {/* Footer */}
+      <Footer />
 
       </BrowserRouter>
     </cartcontext.Provider>

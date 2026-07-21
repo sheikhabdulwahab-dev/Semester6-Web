@@ -44,7 +44,7 @@ function OrderHistory() {
   // Protect the route
   if (!user) {
     return (
-      <div style={{ padding: '40px', fontFamily: '"Segoe UI", sans-serif', textAlign: 'center' }}>
+      <div style={{ padding: '40px', fontFamily: '"Poppins", "Segoe UI", sans-serif', textAlign: 'center' }}>
         <h2 style={{ color: '#E23744' }}>Access Denied 🛑</h2>
         <h3>Please log in to view your order history!</h3>
       </div>
@@ -53,7 +53,7 @@ function OrderHistory() {
 
   if (loading) {
     return (
-      <div style={{ padding: '40px', fontFamily: '"Segoe UI", sans-serif', textAlign: 'center' }}>
+      <div style={{ padding: '40px', fontFamily: '"Poppins", "Segoe UI", sans-serif', textAlign: 'center' }}>
         <h3>Loading your orders... 🍕</h3>
       </div>
     );
