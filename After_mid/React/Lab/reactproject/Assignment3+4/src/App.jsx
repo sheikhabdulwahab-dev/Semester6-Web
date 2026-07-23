@@ -15,46 +15,94 @@ import OrderHistory from "./component/orderhistory"
 function NavBar({ user, handleSignOut, cart }) {
   const location = useLocation();
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="navbar">
-      {/* Left Side Links */}
-      <div className="nav-links">
-        <Link to='/pizzamenu' className={`nav-link ${location.pathname === '/' || location.pathname === '/pizzamenu' ? 'active' : ''}`}>
-          🍕 Menu
-        </Link>
-        <Link to='/bucket' className={`nav-link ${location.pathname === '/bucket' ? 'active' : ''}`} style={{ position: 'relative' }}>
-          🛒 Bucket
-          {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
-        </Link>
-        <Link to='/contact' className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}>
-          📞 Contact
-        </Link>
-        {user && (
-          <Link to='/orderhistory' className={`nav-link ${location.pathname === '/orderhistory' ? 'active' : ''}`}>
-            📜 History
-          </Link>
-        )}
-      </div>
+    <>
+      <nav className="navbar">
+        {/* Hamburger button (mobile only) */}
+        <button className="hamburger-btn" onClick={() => setMenuOpen(true)}>
+          ☰
+        </button>
 
-      {/* Right Side: Auth status */}
-      <div className="nav-auth">
-        {user ? (
-          <div className="nav-user-info">
-            <span className="nav-user-name">
-              👋 Hi, {user.name}!
-            </span>
-            <button onClick={handleSignOut} className="nav-btn">
-              Sign Out
-            </button>
-          </div>
-        ) : (
-          <Link to='/login' className="nav-btn">
-            Login
+        {/* Left Side Links (desktop) */}
+        <div className="nav-links">
+          <Link to='/pizzamenu' className={`nav-link ${location.pathname === '/' || location.pathname === '/pizzamenu' ? 'active' : ''}`}>
+            🍕 Menu
           </Link>
-        )}
-      </div>
-    </nav>
+          <Link to='/bucket' className={`nav-link ${location.pathname === '/bucket' ? 'active' : ''}`} style={{ position: 'relative' }}>
+            🛒 Bucket
+            {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+          </Link>
+          <Link to='/contact' className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}>
+            📞 Contact
+          </Link>
+          {user && (
+            <Link to='/orderhistory' className={`nav-link ${location.pathname === '/orderhistory' ? 'active' : ''}`}>
+              📜 History
+            </Link>
+          )}
+        </div>
+
+        {/* Right Side: Auth status */}
+        <div className="nav-auth">
+          {user ? (
+            <div className="nav-user-info">
+              <span className="nav-user-name">
+                👋 Hi, {user.name}!
+              </span>
+              <button onClick={handleSignOut} className="nav-btn">
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <Link to='/login' className="nav-btn">
+              Login
+            </Link>
+          )}
+        </div>
+      </nav>
+
+      {/* Mobile Navigation Overlay */}
+      {menuOpen && (
+        <div className="mobile-nav-overlay" onClick={() => setMenuOpen(false)}>
+          <div className="mobile-nav-menu" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-nav-header">
+              <Link to='/pizzamenu' onClick={() => setMenuOpen(false)} style={{ color: 'white', textDecoration: 'none', fontSize: '20px', fontWeight: '700' }}>🍕 Pizza Shop</Link>
+              <button className="mobile-close-btn" onClick={() => setMenuOpen(false)}>✕</button>
+            </div>
+            
+            <Link to='/pizzamenu' className={`mobile-nav-link ${location.pathname === '/' || location.pathname === '/pizzamenu' ? 'active' : ''}`} onClick={() => setMenuOpen(false)}>
+              🍕 Menu
+            </Link>
+            <Link to='/bucket' className={`mobile-nav-link ${location.pathname === '/bucket' ? 'active' : ''}`} onClick={() => setMenuOpen(false)}>
+              🛒 Bucket {cartCount > 0 && `(${cartCount})`}
+            </Link>
+            <Link to='/contact' className={`mobile-nav-link ${location.pathname === '/contact' ? 'active' : ''}`} onClick={() => setMenuOpen(false)}>
+              📞 Contact
+            </Link>
+            {user && (
+              <Link to='/orderhistory' className={`mobile-nav-link ${location.pathname === '/orderhistory' ? 'active' : ''}`} onClick={() => setMenuOpen(false)}>
+                📜 Order History
+              </Link>
+            )}
+            
+            <div className="mobile-nav-user">
+              {user ? (
+                <>
+                  <span className="nav-user-name">👋 Hi, {user.name}!</span>
+                  <button onClick={() => { handleSignOut(); setMenuOpen(false); }} className="nav-btn">Sign Out</button>
+                </>
+              ) : (
+                <Link to='/login' className="nav-btn" onClick={() => setMenuOpen(false)} style={{ display: 'block', textAlign: 'center', padding: '12px' }}>
+                  Login
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

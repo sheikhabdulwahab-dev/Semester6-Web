@@ -94,8 +94,8 @@ function Login() {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '50px', backgroundColor: '#F8F9FA', minHeight: '70vh', fontFamily: '"Poppins", "Segoe UI", sans-serif' }}>
-      <div style={{ backgroundColor: 'white', padding: '40px', borderRadius: '15px', boxShadow: '0 10px 30px rgba(0,0,0,0.08)', width: '400px' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '30px 15px', backgroundColor: '#F8F9FA', minHeight: '70vh', fontFamily: '"Poppins", "Segoe UI", sans-serif' }}>
+      <div style={{ backgroundColor: 'white', padding: '30px', borderRadius: '15px', boxShadow: '0 10px 30px rgba(0,0,0,0.08)', width: '100%', maxWidth: '400px' }}>
         <h2 style={{ color: '#E23744', textAlign: 'center', marginBottom: '20px' }}>
           {isSignUp ? 'Create Account' : 'Login'}
         </h2>

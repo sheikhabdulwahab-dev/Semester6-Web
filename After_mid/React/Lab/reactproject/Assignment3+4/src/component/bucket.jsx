@@ -13,7 +13,7 @@ function Bucket(){
     // --- Protect the Bucket ---
     if (!user) {
         return (
-            <div style={{ padding: '80px 40px', fontFamily: '"Poppins", "Segoe UI", sans-serif', textAlign: 'center', minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ padding: '60px 20px', fontFamily: '"Poppins", "Segoe UI", sans-serif', textAlign: 'center', minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 <div style={{ fontSize: '60px', marginBottom: '20px' }}>🔒</div>
                 <h2 style={{ color: '#E23744', marginBottom: '10px' }}>Access Denied</h2>
                 <p style={{ color: '#888', fontSize: '16px', maxWidth: '400px' }}>Please log in first using the navigation bar to view your bucket!</p>
@@ -48,11 +48,11 @@ function Bucket(){
     
     // --- PREMIUM BUCKET LAYOUT ---
     return(
-        <div style={{ padding: '40px', fontFamily: '"Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif', backgroundColor: '#F8F9FA', minHeight: '70vh', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ padding: '30px 15px', fontFamily: '"Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif', backgroundColor: '#F8F9FA', minHeight: '70vh', display: 'flex', justifyContent: 'center' }}>
             
-            <div style={{ backgroundColor: 'white', padding: '40px', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.08)', width: '600px', height: 'fit-content' }}>
+            <div style={{ backgroundColor: 'white', padding: '25px', borderRadius: '20px', boxShadow: '0 10px 30px rgba(0,0,0,0.08)', width: '100%', maxWidth: '600px', height: 'fit-content' }}>
                 
-                <h2 style={{ color: '#E23744', borderBottom: '3px solid #eee', paddingBottom: '15px', marginTop: '0' }}>🛒 Hi, {user.name}!</h2>
+                <h2 style={{ color: '#E23744', borderBottom: '3px solid #eee', paddingBottom: '15px', marginTop: '0', fontSize: 'clamp(18px, 4vw, 24px)' }}>🛒 Hi, {user.name}!</h2>
                 
                 {cart.length === 0 ? (
                     <div style={{ textAlign: 'center', padding: '40px 0' }}>
@@ -63,31 +63,31 @@ function Bucket(){
                 ) : (
                     <div>
                         {/* Table Header */}
-                        <div style={{ display: 'flex', padding: '15px 10px', backgroundColor: '#FFF5F6', borderRadius: '10px', fontWeight: 'bold', color: '#E23744', marginBottom: '15px' }}>
-                            <div style={{ flex: '1', textAlign: 'center' }}>Quantity</div>
-                            <div style={{ flex: '2', paddingLeft: '10px' }}>Item Name</div>
+                        <div style={{ display: 'flex', padding: '12px 10px', backgroundColor: '#FFF5F6', borderRadius: '10px', fontWeight: 'bold', color: '#E23744', marginBottom: '15px', fontSize: '14px' }}>
+                            <div style={{ flex: '1', textAlign: 'center' }}>Qty</div>
+                            <div style={{ flex: '2', paddingLeft: '10px' }}>Item</div>
                             <div style={{ flex: '1', textAlign: 'right' }}>Price</div>
                         </div>
                         
                         {/* Cart Items */}
                         {cart.map((item, index) => (
-                            <div key={index} style={{ display: 'flex', padding: '15px 10px', borderBottom: '1px solid #eee', alignItems: 'center' }}>
+                            <div key={index} style={{ display: 'flex', padding: '12px 10px', borderBottom: '1px solid #eee', alignItems: 'center' }}>
                                 
                                 {/* Quantity Column */}
                                 <div style={{ flex: '1', textAlign: 'center' }}>
-                                    <span style={{ fontWeight: 'bold', color: '#555', backgroundColor: '#f5f5f5', padding: '5px 12px', borderRadius: '5px' }}>
+                                    <span style={{ fontWeight: 'bold', color: '#555', backgroundColor: '#f5f5f5', padding: '4px 10px', borderRadius: '5px', fontSize: '14px' }}>
                                         {item.quantity}
                                     </span>
                                 </div>
                                 
                                 {/* Name Column */}
                                 <div style={{ flex: '2', paddingLeft: '10px' }}>
-                                    <span style={{ fontWeight: 'bold', color: '#333', fontSize: '18px' }}>{item.name}</span>
+                                    <span style={{ fontWeight: 'bold', color: '#333', fontSize: '16px' }}>{item.name}</span>
                                 </div>
                                 
                                 {/* Price Column */}
                                 <div style={{ flex: '1', textAlign: 'right' }}>
-                                    <span style={{ fontWeight: 'bold', color: '#666' }}>Rs. {item.price * item.quantity}</span>
+                                    <span style={{ fontWeight: 'bold', color: '#666', fontSize: '14px' }}>Rs. {item.price * item.quantity}</span>
                                 </div>
                                 
                             </div>
@@ -95,17 +95,17 @@ function Bucket(){
                     </div>
                 )}
                 
-                <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ marginTop: '25px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
                     <button 
                         onClick={() => setcart([])} 
-                        style={{ backgroundColor: 'white', color: '#E23744', border: '2px solid #E23744', padding: '12px 25px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '15px' }}
+                        style={{ backgroundColor: 'white', color: '#E23744', border: '2px solid #E23744', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '14px', fontFamily: 'inherit' }}
                     >
                         Clear Cart 🗑️
                     </button>
 
                     <div style={{ textAlign: 'right' }}>
-                        <span style={{ fontSize: '16px', color: '#666' }}>Grand Total</span>
-                        <h2 style={{ margin: '5px 0 0 0', color: '#E23744', fontSize: '32px' }}>Rs. {totalprice}</h2>
+                        <span style={{ fontSize: '14px', color: '#666' }}>Grand Total</span>
+                        <h2 style={{ margin: '5px 0 0 0', color: '#E23744', fontSize: 'clamp(24px, 5vw, 32px)' }}>Rs. {totalprice}</h2>
                     </div>
                 </div>
 
@@ -122,9 +122,10 @@ function Bucket(){
                             cursor: 'pointer', 
                             fontWeight: 'bold', 
                             width: '100%', 
-                            fontSize: '18px', 
-                            marginTop: '25px',
-                            boxShadow: '0 4px 10px rgba(184, 93, 52, 0.3)' 
+                            fontSize: '16px', 
+                            marginTop: '20px',
+                            boxShadow: '0 4px 10px rgba(184, 93, 52, 0.3)',
+                            fontFamily: 'inherit'
                         }}
                     >
                         Order Now 🍕
